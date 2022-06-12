@@ -21,14 +21,12 @@
 <div class="col-lg-3 col-md-12 col-sm-12"> 
     <div id="search-bar">
         <label for="search">Search for a City:</label>
-        <form>
         <div class="form-row">
             <input id="search" class="form-control" value="enter city here"></input>
-            <button id="submit-button" type="submit" class="btn btn-dark">  
+            <button id="submit-button" class="btn btn-dark">  
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
         </div>
-        </form>
     </div>
 
     <div id="search-results">
@@ -38,16 +36,19 @@
 <!--right module consisting of city, current, and 5-day forecast-->
 <div class="col-lg-9 col-md-12 col-sm-12">
     <div id="current-weather" class="border border-secondary rounded">
-        HELLO
+        <div id="city-name-date"></div>
     </div>
-    <div id="5-day-forecast"></div>
+    <div id="5-day-forecast">
+
+    </div>
 </div>
 </div>
 </div>
 
 </body>
 
-<!--custom javascript-->
+<!--custom javascript and moment import-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src="assets/script.js"></script>
 
 </html>
