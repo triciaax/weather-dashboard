@@ -53,7 +53,7 @@ function setActiveWeather(response) {
     let weatherIcon = `https://openweathermap.org/img/w/${response.weather[0].icon}.png`;
     headerInnerHtml = `
     <h3>
-        ${response.name}: ${momentTime.format("(MM/DD/YYYY)")}
+        ${response.name}: ${momentTime.format("MM/DD/YYYY")}
         <img src=${weatherIcon}>
     </h3>
     `
@@ -62,9 +62,9 @@ function setActiveWeather(response) {
     //to pull temp, wind, humidity, & uv index data
     var weatherNowHTML = `
     <ul style="list-style-type:none;">
-    <li>Temperature: ${response.main.temp}</li>
-    <li>Wind: ${response.wind.speed}</li>
-    <li>Humidity: ${response.main.humidity}</li>
+    <li>Temp: ${response.main.temp}&#176;F</li>
+    <li>Wind: ${response.wind.speed} mph</li>
+    <li>Humidity: ${response.main.humidity}%</li>
     <li> UV Index: (unable to pull via API provided)</li>
     </ul>
     `
@@ -86,18 +86,32 @@ function get5DayWeatherData(city) {
 
 //function to set 5 day weather data
 function set5DayWeather(response) {
-    var htmlString = "";
+    var htmlString = `
+    <div class="text-center"><h3>5-Day Forecast</h3></div>
+    <div class="container align-middle px-2 py-2">
+            <div class="row">
+    `;
     for (i = 6; i < 11; i++) {
+        //convert date to different format
+        var currentTime = response.list[i].dt
+        var momentTime = moment.unix(currentTime).utc();
+        let weatherIcon = `https://openweathermap.org/img/w/${response.list[i].weather[0].icon}.png`;
         var innerHTML = `
-        <div>
-                <h5>${response.list[i].dt_txt}</h5>
-                <br>Temperature: ${response.list[i].main.temp}
-                <br>Wind: ${response.list[i].wind.speed}
-                <br>Humidity: ${response.list[i].main.humidity}
-        <div>
+                <div class="col-lg-2 col-md-1 col-sm-1 p-3 mb-2 bg-dark text-white mx-auto">
+                    <h5>${momentTime.format("MM/DD/YYYY")}</h5>
+                    <br><img src=${weatherIcon}>
+                    <br>Temp: ${response.list[i].main.temp}&#176;F
+                    <br>Wind: ${response.list[i].wind.speed} mph
+                    <br>Humidity: ${response.list[i].main.humidity}%
+                </div>
         `
         htmlString += innerHTML
     }
+    htmlString += `
+    </div>
+    </div>
+    `
+
     forecastEl.innerHTML = htmlString;
 }
 
