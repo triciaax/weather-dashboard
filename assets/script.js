@@ -80,7 +80,25 @@ function get5DayWeatherData(city) {
         // update the weather history in local storage
         save5DayHistory(city, response);
         console.log(response);
+        set5DayWeather(response)
     })
+}
+
+//function to set 5 day weather data
+function set5DayWeather(response) {
+    var htmlString = "";
+    for (i = 6; i < 11; i++) {
+        var innerHTML = `
+        <div>
+                <h5>${response.list[i].dt_txt}</h5>
+                <br>Temperature: ${response.list[i].main.temp}
+                <br>Wind: ${response.list[i].wind.speed}
+                <br>Humidity: ${response.list[i].main.humidity}
+        <div>
+        `
+        htmlString += innerHTML
+    }
+    forecastEl.innerHTML = htmlString;
 }
 
 searchButtonEl.addEventListener("click", function() {
