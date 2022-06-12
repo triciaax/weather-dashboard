@@ -2,16 +2,25 @@
 var currentCity = "";
 var apiKey = "64300598ff5e5d0e4355814a64430ed9";
 var history = {};
+var history5Day ={};
 var searchButtonEl = document.getElementById("submit-button");
 var searchTextEl = document.getElementById("search");
 var cityNameEl = document.getElementById("city-name-date");
 var cityWeatherEl = document.getElementById("city-weather-now");
+var forecastEl = document.getElementById("5-day-forecast");
 
-// function to add api data to local storage
+// function to add api data to local storage - current
 function saveHistory(city, data) {
     history[city] = data;
     var historyString = JSON.stringify(history);
     localStorage.setItem("weatherHistory", JSON.stringify(historyString));
+}
+
+// function to add api data to local storage - 5 day
+function save5DayHistory(city, data) {
+    history5Day[city] = data;
+    var historyString = JSON.stringify(history5Day);
+    localStorage.setItem("history5Day", JSON.stringify(historyString));
 }
 
 // function to load the history from local storage - runs on page load
@@ -29,14 +38,15 @@ function getWeatherInCity(city) {
     .then((response) => {
         // update the weather history in local storage
         saveHistory(city, response);
-        //get image from site
         console.log(response);
-        setActiveWeather(city, response);
+        setActiveWeather(response);
 
     })
 }
 
-function setActiveWeather(city, response) {
+//function to set the active city
+function setActiveWeather(response) {
+    //build correct date, time, and weather image
     var currentTime = response.dt
     var offset = response.timezone / 60 / 60;
     var momentTime = moment.unix(currentTime).utc().utcOffset(offset);
@@ -49,6 +59,7 @@ function setActiveWeather(city, response) {
     `
     cityNameEl.innerHTML = headerInnerHtml;
 
+    //to pull temp, wind, humidity, & uv index data
     var weatherNowHTML = `
     <ul style="list-style-type:none;">
     <li>Temperature: ${response.main.temp}</li>
@@ -60,10 +71,20 @@ function setActiveWeather(city, response) {
     cityWeatherEl.innerHTML = weatherNowHTML;
 }
 
+// function to pull 5-day weather data
+function get5DayWeatherData(city) {
+    let queryString = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&APPID=${apiKey}`
+    fetch(queryString)
+    .then((response) => response.json())
+    .then((response) => {
+        // update the weather history in local storage
+        save5DayHistory(city, response);
+        console.log(response);
+    })
+}
 
 searchButtonEl.addEventListener("click", function() {
     var city = searchTextEl.value;
     getWeatherInCity(city);
+    get5DayWeatherData(city);
 })
-
-
