@@ -5,7 +5,7 @@ var history = {};
 var searchButtonEl = document.getElementById("submit-button");
 var searchTextEl = document.getElementById("search");
 var cityNameEl = document.getElementById("city-name-date");
-
+var cityWeatherEl = document.getElementById("city-weather-now");
 
 // function to add api data to local storage
 function saveHistory(city, data) {
@@ -48,6 +48,16 @@ function setActiveWeather(city, response) {
     </h3>
     `
     cityNameEl.innerHTML = headerInnerHtml;
+
+    var weatherNowHTML = `
+    <ul style="list-style-type:none;">
+    <li>Temperature: ${response.main.temp}</li>
+    <li>Wind: ${response.wind.speed}</li>
+    <li>Humidity: ${response.main.humidity}</li>
+    <li> UV Index: (unable to pull via API provided)</li>
+    </ul>
+    `
+    cityWeatherEl.innerHTML = weatherNowHTML;
 }
 
 
