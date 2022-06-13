@@ -1,32 +1,30 @@
 //global variables
 var currentCity = "";
 var apiKey = "64300598ff5e5d0e4355814a64430ed9";
-var history = {};
-var history5Day ={};
+var cityHistory = [];
 var searchButtonEl = document.getElementById("submit-button");
 var searchTextEl = document.getElementById("search");
 var cityNameEl = document.getElementById("city-name-date");
 var cityWeatherEl = document.getElementById("city-weather-now");
 var forecastEl = document.getElementById("5-day-forecast");
+var historyEl = document.getElementById("search-history");
 
 // function to add api data to local storage - current
-function saveHistory(city, data) {
-    history[city] = data;
-    var historyString = JSON.stringify(history);
-    localStorage.setItem("weatherHistory", JSON.stringify(historyString));
-}
-
-// function to add api data to local storage - 5 day
-function save5DayHistory(city, data) {
-    history5Day[city] = data;
-    var historyString = JSON.stringify(history5Day);
-    localStorage.setItem("history5Day", JSON.stringify(historyString));
+function saveHistory(city) {
+    if (!cityHistory.includes(city)) {
+        cityHistory.push(city);
+        var historyString = JSON.stringify(cityHistory);
+        localStorage.setItem("cityHistory", historyString);
+    }
 }
 
 // function to load the history from local storage - runs on page load
 function loadHistory() {
-    var history_string = localStorage.getItem("weatherHistory");
-    history = JSON.parse(history_string);
+    var historyString = localStorage.getItem("cityHistory");
+    var storageHistory = JSON.parse(historyString);
+    if (storageHistory) {
+        cityHistory = storageHistory
+    }
 }
 
 // function to retrieve the weather in the selected city
@@ -37,8 +35,8 @@ function getWeatherInCity(city) {
     .then((response) => response.json())
     .then((response) => {
         // update the weather history in local storage
-        saveHistory(city, response);
-        console.log(response);
+        saveHistory(city);
+        renderHistory();
         setActiveWeather(response);
 
     })
@@ -78,16 +76,14 @@ function get5DayWeatherData(city) {
     .then((response) => response.json())
     .then((response) => {
         // update the weather history in local storage
-        save5DayHistory(city, response);
-        console.log(response);
-        set5DayWeather(response)
+        set5DayWeather(response);
     })
 }
 
 //function to set 5 day weather data
 function set5DayWeather(response) {
     var htmlString = `
-    <div class="text-center"><h3>5-Day Forecast</h3></div>
+    <div class="text-center px-2 py-2"><h3>5-Day Forecast</h3></div>
     <div class="container align-middle px-2 py-2">
             <div class="row">
     `;
@@ -97,7 +93,7 @@ function set5DayWeather(response) {
         var momentTime = moment.unix(currentTime).utc();
         let weatherIcon = `https://openweathermap.org/img/w/${response.list[i].weather[0].icon}.png`;
         var innerHTML = `
-                <div class="col-lg-2 col-md-1 col-sm-1 p-3 mb-2 bg-dark text-white mx-auto">
+                <div class="col-lg-2 col-md-5 col-sm-12 p-3 mb-2 bg-dark text-white mx-auto rounded px-2 py-2">
                     <h5>${momentTime.format("MM/DD/YYYY")}</h5>
                     <br><img src=${weatherIcon}>
                     <br>Temp: ${response.list[i].main.temp}&#176;F
@@ -115,8 +111,38 @@ function set5DayWeather(response) {
     forecastEl.innerHTML = htmlString;
 }
 
+// render city history information
+function renderHistory() {
+    var last5 = cityHistory.slice(-5);
+    var htmlString = `
+    <hr>
+    <ul>
+    `
+    // block to create buttons for the last 5 cities searched
+    for (var i = 0; i < last5.length; i++) {
+        innerHTML = `
+        <button type="button" id="${last5[i]}" class="list-group-item list-group-item-action">${last5[i]}</button>
+        `
+        htmlString += innerHTML;
+    }
+    htmlString += "</ul>"
+    historyEl.innerHTML = htmlString;
+    // block to create listeners for the last 5 cities searched
+    for (var i = 0; i < last5.length; i++) {
+        var city = last5[i];
+        var buttonEl = document.getElementById(city);
+        buttonEl.addEventListener("click", function() {
+            getWeatherInCity(this.id);
+            get5DayWeatherData(this.id);
+        })
+    }
+}
+
 searchButtonEl.addEventListener("click", function() {
     var city = searchTextEl.value;
     getWeatherInCity(city);
     get5DayWeatherData(city);
 })
+
+loadHistory();
+renderHistory();

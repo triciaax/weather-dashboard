@@ -20,24 +20,25 @@
 <!--left module consisting of search bar and locations-->
 <div class="col-lg-3 col-md-12 col-sm-12"> 
     <div id="search-bar">
-        <label for="search">Search for a City:</label>
-        <div class="form-row">
-            <input id="search" class="form-control" value="enter city here"></input>
+        <label for="search"><h2>Search for a City:</h2></label>
+        <div>
+            <input id="search" class="form-control px-2 py-2" placeholder="enter city here"></input>
+            <div class="px-2 py-2">
             <button id="submit-button" class="btn btn-dark">  
-                <i class="fa-solid fa-magnifying-glass"></i>
+                Search <i class="fa-solid fa-magnifying-glass"></i>
             </button>
+            </div>
         </div>
     </div>
 
-    <div id="search-results">
+    <div id="search-history">
     </div>
 </div>
 
 <!--right module consisting of city, current, and 5-day forecast-->
 <div class="col-lg-9 col-md-12 col-sm-12">
-    <div id="current-weather" class="border border-secondary rounded px-2 py-2">
-        <div id="city-name-date">
-        </div>
+    <div id="current-weather" class="border border-secondary rounded px-3 py-2">
+        <div id="city-name-date"></div>
         <div id="city-weather-now"></div>
     </div>
 
