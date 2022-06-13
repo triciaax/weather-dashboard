@@ -16,7 +16,7 @@ Users can also see what the 5-day forecast is for the location they searched. Th
 3. View the forecast to that location on the bottom of the right module
 4. To view search history, look underneath the search button. You will find a list of previously searched cities. Click on each one to see the current and forecasted weather conditions.
    
-## Screenshots
+## Screenshot
 ![screenshot of weather dash](assets/screenshot.png)
 
 ## Link
