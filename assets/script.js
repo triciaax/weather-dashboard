@@ -116,7 +116,8 @@ function renderHistory() {
     var last5 = cityHistory.slice(-5);
     var htmlString = `
     <hr>
-    <ul>
+    <div class="text-center">
+    <ul class="align-self-center px-0">
     `
     // block to create buttons for the last 5 cities searched
     for (var i = 0; i < last5.length; i++) {
@@ -125,7 +126,7 @@ function renderHistory() {
         `
         htmlString += innerHTML;
     }
-    htmlString += "</ul>"
+    htmlString += "</ul> </div>"
     historyEl.innerHTML = htmlString;
     // block to create listeners for the last 5 cities searched
     for (var i = 0; i < last5.length; i++) {

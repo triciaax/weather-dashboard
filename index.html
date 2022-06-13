@@ -3,49 +3,52 @@
 <head>
     <title>Weather Dashboard</title>
     <link rel="stylesheet" href="./assets/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" />
     <script src="https://kit.fontawesome.com/a39e5828dd.js" crossorigin="anonymous"></script>
 </head>
 
-<body >
-<!--header-->
-<div class="text-center p-3 mb-2 bg-dark text-white">
-    <h1>Weather Dashboard</h1>
-</div>
+<body>
+    <!--header-->
+    <div class="text-center p-3 mb-2 bg-dark text-white">
+        <h1>Weather Dashboard</h1>
+    </div>
 
-<!--main content-->
-<div class="container">
-    <div class="row">
+    <!--main content-->
+    <div class="container">
+        <div class="row">
 
-<!--left module consisting of search bar and locations-->
-<div class="col-lg-3 col-md-12 col-sm-12"> 
-    <div id="search-bar">
-        <label for="search"><h2>Search for a City:</h2></label>
-        <div>
-            <input id="search" class="form-control px-2 py-2" placeholder="enter city here"></input>
-            <div class="px-2 py-2">
-            <button id="submit-button" class="btn btn-dark">  
-                Search <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
+            <!--left module consisting of search bar and locations-->
+            <div class="col-lg-3 col-md-12 col-sm-12">
+                <div id="search-bar">
+                    <label for="search">
+                        <h2>Search for a City:</h2>
+                    </label>
+                    <div>
+                        <input id="search" class="form-control px-2 py-2" placeholder="enter city here"></input>
+                        <div class="py-2">
+                            <button id="submit-button" class="btn btn-dark" style="width: 100%;">
+                                Search <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="search-history" class="align-self-center">
+                </div>
+            </div>
+
+            <!--right module consisting of city, current, and 5-day forecast-->
+            <div class="col-lg-9 col-md-12 col-sm-12">
+                <div id="current-weather" class="border border-secondary rounded px-3 py-2">
+                    <div id="city-name-date"></div>
+                    <div id="city-weather-now"></div>
+                </div>
+
+                <div id="5-day-forecast"></div>
             </div>
         </div>
     </div>
-
-    <div id="search-history">
-    </div>
-</div>
-
-<!--right module consisting of city, current, and 5-day forecast-->
-<div class="col-lg-9 col-md-12 col-sm-12">
-    <div id="current-weather" class="border border-secondary rounded px-3 py-2">
-        <div id="city-name-date"></div>
-        <div id="city-weather-now"></div>
-    </div>
-
-    <div id="5-day-forecast"></div>
-</div>
-</div>
-</div>
 
 </body>
 
