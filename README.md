@@ -6,7 +6,7 @@ This is a weath dashboard that allows users to search a city to see what the cur
 Users can also see what the 5-day forecast is for the location they searched. This application will track historical searches. Users can click on the a past city they searched in the left module.
 
 ## Metrics Tracked
-- Weather
+- Temperature
 - Wind Speed
 - Humidity
   
@@ -17,5 +17,7 @@ Users can also see what the 5-day forecast is for the location they searched. Th
 4. To view search history, look underneath the search button. You will find a list of previously searched cities. Click on each one to see the current and forecasted weather conditions.
    
 ## Screenshots
+![screenshot of weather dash](assets/screenshot.png)
 
 ## Link
+Link to application here: https://triciaax.github.io/weather-dashboard/ 
